@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/image.380644x1puu0.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/image.52lv7ekrz2o0.png">
 <meta property="article:published_time" content="2021-08-24T05:43:35.000Z">
-<meta property="article:modified_time" content="2021-08-25T05:40:36.877Z">
+<meta property="article:modified_time" content="2021-08-25T06:14:41.647Z">
 <meta property="article:author" content="Alon Scholar">
 <meta property="article:tag" content="数据结构">
 <meta property="article:tag" content="算法">
@@ -534,8 +534,10 @@
 <h3 id="共享栈"><a class="markdownIt-Anchor" href="#共享栈"></a> 共享栈</h3>
 <p>利用栈底位置相对不变的特性，可让两个顺序栈共享一个一维数组空间，将两个栈的栈底分别设置在共享空间的两端，两个栈顶向共享空间的中间延伸，如下图所示。</p>
 <center><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/数据结构/数据结构(严蔚敏)-第三章-栈和队列/image.1z4klxh4mo0w.png"></center>
-- 两个栈的栈顶指针都指向栈顶元素，top0=-1时0号栈为空，top1=MaxSize时1号栈为空;仅当两个栈顶指针相邻(top1-top0=1)时，判断为栈满。当0号栈进栈时top0 先加1再赋值，1号栈进栈时top1先减1再赋值;出栈时则刚好相反。 
-- 共享栈是为了更有效地利用存储空间，两个栈的空间相互调节，只有在整个存储空间被占满时才发生上溢。其存取数据的时间复杂度均为O(1)，所以对存取效率没有什么影响。 
+<ul>
+<li>两个栈的栈顶指针都指向栈顶元素，top0=-1时0号栈为空，top1=MaxSize时1号栈为空;仅当两个栈顶指针相邻(top1-top0=1)时，判断为栈满。当0号栈进栈时top0 先加1再赋值，1号栈进栈时top1先减1再赋值;出栈时则刚好相反。</li>
+<li>共享栈是为了更有效地利用存储空间，两个栈的空间相互调节，只有在整个存储空间被占满时才发生上溢。其存取数据的时间复杂度均为O(1)，所以对存取效率没有什么影响。</li>
+</ul>
 <h2 id="队列的表示和操作的实现"><a class="markdownIt-Anchor" href="#队列的表示和操作的实现"></a> 队列的表示和操作的实现</h2>
 <h3 id="队列的类型定义"><a class="markdownIt-Anchor" href="#队列的类型定义"></a> 队列的类型定义</h3>
 <p>队列的操作与栈的操作类似，不同的是，删除是在表的头部（即队头）进行。 下面给出<strong>队列的抽象数据类型定义</strong>：</p>
@@ -547,7 +549,7 @@
 <p>在此约定：初始化创建空队列时，令 front = rear = 0 , <strong>每当插入新的队列尾元素时，尾指针 rear 增1; 每当删除队列头元素时，头指针 front 增1</strong>。因此，<font color="BlueViolet">在非空队列中，头指针始终指向队列头元素，而尾指针始终指向队列尾元素的下一个位置</font>，如下图所示。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/image.1y8v7pxjhfz4.png" alt="image"></p>
 <ul>
-<li><font color="red">初始状态（队空条件)</font>: Q.front<mark>Q.rear</mark>0。</li>
+<li><font color="red">初始状态（队空条件)</font>: Q.front == Q.rear == 0。</li>
 <li><font color="red">进队操作</font>: 队不满时，先送值到队尾元素，再将队尾指针加1。</li>
 <li><font color="red">出队操作</font>: 队不空时，先取队头元素值，再将队头指针加1。</li>
 </ul>
@@ -565,13 +567,13 @@
 <li><font color="red">队列长度</font>: (Q.rear+MaxSize-Q.front ) %MaxSize。</li>
 </ul>
 <blockquote>
-<p><strong>新问题</strong>： 循环队列队空和队满的判断条件是什么呢？因为队空条件是 Q.front<mark>Q.rear 。而且当入队时有可能出现上图(d)的情况，此时也有Q.front</mark>Q.rear。 那么如何区别队满还是队空呢？</p>
+<p><strong>新问题</strong>： 循环队列队空和队满的判断条件是什么呢？因为队空条件是 Q.front == Q.rear 。而且当入队时有可能出现上图(d)的情况，此时也有Q.front == Q.rear。 那么如何区别队满还是队空呢？</p>
 </blockquote>
 <p>为了区分队空还是队满的情况，给出三种处理方式进行参考：</p>
 <ol>
-<li><font color="BlueViolet">牺牲一个单元来区分队空和队满</font>，入队时少用一个队列单元，这是一种较为普遍的做法，约定以“队头指针在队尾指针的下一位置作为队满的标志”，如上图(d2)所示。 此时队满条件为： (Q.rear+1) %MaxSize<mark>Q.front。队空条件仍为： Q.front</mark>Q.rear。</li>
-<li><font color="BlueViolet">类型中增设表示元素个数的数据成员</font>。这样，队空的条件为Q.size<mark>0;队满的条件为Q.size</mark>Maxsize。这两种情况都有 Q.front==Q.rear。</li>
-<li><font color="BlueViolet">类型中增设tag 数据成员，以区分是队满还是队空</font>。tag 等于0时，若因删除导致Q.front<mark>Q.rear，则为队空; tag等于1时，若因插入导致Q.front</mark>Q.rear，则为队满。</li>
+<li><font color="BlueViolet">牺牲一个单元来区分队空和队满</font>，入队时少用一个队列单元，这是一种较为普遍的做法，约定以“队头指针在队尾指针的下一位置作为队满的标志”，如上图(d2)所示。 此时队满条件为： (Q.rear+1) %MaxSize == Q.front。队空条件仍为： Q.front == Q.rear。</li>
+<li><font color="BlueViolet">类型中增设表示元素个数的数据成员</font>。这样，队空的条件为Q.size == 0;队满的条件为Q.size == Maxsize。这两种情况都有 Q.front == Q.rear。</li>
+<li><font color="BlueViolet">类型中增设tag 数据成员，以区分是队满还是队空</font>。tag 等于0时，若因删除导致Q.front == Q.rear，则为队空; tag等于1时，若因插入导致Q.front == Q.rear，则为队满。</li>
 </ol>
 <hr>
 <blockquote>
