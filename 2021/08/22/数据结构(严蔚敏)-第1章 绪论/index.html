@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%AA%E8%AE%BA/image.6e4vj2f4qe00.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%AA%E8%AE%BA/image.4527eqbed100.png">
 <meta property="article:published_time" content="2021-08-22T14:43:35.000Z">
-<meta property="article:modified_time" content="2021-08-24T06:59:38.674Z">
+<meta property="article:modified_time" content="2021-08-26T02:40:03.891Z">
 <meta property="article:author" content="Alon Scholar">
 <meta property="article:tag" content="数据结构">
 <meta property="article:tag" content="算法">
@@ -600,7 +600,7 @@
 </ol>
 <h3 id="算法的空间复杂度"><a class="markdownIt-Anchor" href="#算法的空间复杂度"></a> 算法的空间复杂度</h3>
 <blockquote>
-<p>关千算法的存储空间需求，类似于算法的时间复杂度，我们采用<strong>渐近空间复杂度</strong>(SpaceComplexity)作为算法所需存储空间的扯度，简称空间复杂度，它也是问题规模n的函数，记作：S(n)=O(f(n))</p>
+<p>关于算法的存储空间需求，类似于算法的时间复杂度，我们采用<strong>渐近空间复杂度</strong>(SpaceComplexity)作为算法所需存储空间的量度，简称空间复杂度，它也是问题规模n的函数，记作：S(n)=O(f(n))</p>
 </blockquote>
 <p>空间复杂度只需要分析辅助变量所占的额外空间。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 数组逆序，将一维数组a中的n个数逆序存放到原数组中。</span></span><br><span class="line"><span class="comment">// 算法 1 ，仅需要另外借助一个变量t， 与问题规模n大小无关，所以其空间复杂度为0(1)。</span></span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n/<span class="number">2</span>;i++)</span><br><span class="line">&#123;</span><br><span class="line">    t=a[i];</span><br><span class="line">    a[i]=a[n-i<span class="number">-1</span>];</span><br><span class="line">    a[n-i<span class="number">-1</span>]=t;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 算法 2	，需要另外借助一个大小为n的辅助数组b, 所以其空间复杂度为O(n)。</span></span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">	b[i] = a[n-i<span class="number">-1</span>];</span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    a[i] = b[i];</span><br></pre></td></tr></table></figure>
