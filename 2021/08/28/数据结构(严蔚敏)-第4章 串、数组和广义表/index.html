@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>数据结构(严蔚敏)-第4章 串、数组和广义表 | Alon&#39;s blog</title>
+  <meta name="description" content="串、数组和广义表 计算机上的非数值处理的对象大部分是字符串数据， 字符串一般简称为串。串是一种特殊的线性表， 其特殊性体现在数据元素是一个字符， 也就是说， 串是一种内容受限的线性表。由于现今使用的计算机硬件结构是面向数值计算的需要而设计的， 在处理字符串数据时比处理整数和浮点数要复杂得多。而且， 在不同类型的应用中， 所处理的字符串具有不同的特点， 要有效地实现字符串的处理， 就必须根据具体情">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构(严蔚敏)-第4章 串、数组和广义表">
+<meta property="og:url" content="https://alonscholar.github.io/2021/08/28/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC4%E7%AB%A0%20%E4%B8%B2%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%B9%BF%E4%B9%89%E8%A1%A8/index.html">
+<meta property="og:site_name" content="AlonScholar">
+<meta property="og:description" content="串、数组和广义表 计算机上的非数值处理的对象大部分是字符串数据， 字符串一般简称为串。串是一种特殊的线性表， 其特殊性体现在数据元素是一个字符， 也就是说， 串是一种内容受限的线性表。由于现今使用的计算机硬件结构是面向数值计算的需要而设计的， 在处理字符串数据时比处理整数和浮点数要复杂得多。而且， 在不同类型的应用中， 所处理的字符串具有不同的特点， 要有效地实现字符串的处理， 就必须根据具体情">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E4%B8%B2%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%B9%BF%E4%B9%89%E8%A1%A8/image.je0zhavqzao.png">
+<meta property="article:published_time" content="2021-08-28T05:43:35.000Z">
+<meta property="article:modified_time" content="2021-08-28T15:41:19.268Z">
+<meta property="article:author" content="Alon Scholar">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E4%B8%B2%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%B9%BF%E4%B9%89%E8%A1%A8/image.je0zhavqzao.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://alonscholar.github.io/2021/08/28/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC4%E7%AB%A0%20%E4%B8%B2%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%B9%BF%E4%B9%89%E8%A1%A8/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="AlonScholar" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    <link href="//cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css" rel="stylesheet">
+  
+  
+  
+  
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css">
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/alonscholar" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">AlonScholar</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Student &amp; Developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> ShanDong, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/alonscholar" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://weixin.qq.com/" target="_blank" title="Wechat" data-toggle=tooltip data-placement=top><i class="icon icon-wechat"></i></a></li>
+        
+        <li><a href="https://im.qq.com/index" target="_blank" title="Qq" data-toggle=tooltip data-placement=top><i class="icon icon-qq"></i></a></li>
+        
+        <li><a href="https://mail.qq.com/" target="_blank" title="Email" data-toggle=tooltip data-placement=top><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="https://user.qzone.qq.com/2530394412" target="_blank" title="Qzone" data-toggle=tooltip data-placement=top><i class="icon icon-qzone"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎来到我的个人网站!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a><span class="category-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 13px;">数据结构</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13px;">算法</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/08/28/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC4%E7%AB%A0%20%E4%B8%B2%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%B9%BF%E4%B9%89%E8%A1%A8/" class="title">数据结构(严蔚敏)-第4章 串、数组和广义表</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-08-28T05:43:35.000Z" itemprop="datePublished">2021-08-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/08/24/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC3%E7%AB%A0%20%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" class="title">数据结构(严蔚敏)-第3章 栈和队列</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-08-24T05:43:35.000Z" itemprop="datePublished">2021-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/08/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC2%E7%AB%A0%20%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="title">数据结构(严蔚敏)-第2章 线性表</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-08-23T02:43:35.000Z" itemprop="datePublished">2021-08-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/08/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC1%E7%AB%A0%20%E7%BB%AA%E8%AE%BA/" class="title">数据结构(严蔚敏)-第1章 绪论</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-08-22T14:43:35.000Z" itemprop="datePublished">2021-08-22</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%B2-%E6%95%B0%E7%BB%84%E5%92%8C%E5%B9%BF%E4%B9%89%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text"> 串、数组和广义表</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%B2%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.</span> <span class="toc-text"> 串的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%B2%E7%9A%84%E7%B1%BB%E5%9E%8B%E5%AE%9A%E4%B9%89-%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%E5%8F%8A%E5%85%B6%E8%BF%90%E7%AE%97"><span class="toc-number">1.2.</span> <span class="toc-text"> 串的类型定义、存储结构及其运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%B2%E7%9A%84%E6%8A%BD%E8%B1%A1%E7%B1%BB%E5%9E%8B%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 串的抽象类型定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%B2%E7%9A%84%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 串的存储结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%B2%E7%9A%84%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 串的模式匹配算法</span></a></li></ol></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-数据结构(严蔚敏)-第4章 串、数组和广义表" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      数据结构(严蔚敏)-第4章 串、数组和广义表
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/08/28/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC4%E7%AB%A0%20%E4%B8%B2%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%B9%BF%E4%B9%89%E8%A1%A8/" class="article-date">
+	  <time datetime="2021-08-28T05:43:35.000Z" itemprop="datePublished">2021-08-28</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a>, <a class="article-tag-link-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/08/28/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC4%E7%AB%A0%20%E4%B8%B2%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%B9%BF%E4%B9%89%E8%A1%A8/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2.2k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 7(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="串-数组和广义表"><a class="markdownIt-Anchor" href="#串-数组和广义表"></a> 串、数组和广义表</h1>
+<p>计算机上的非数值处理的对象大部分是字符串数据， <strong>字符串一般简称为串</strong>。<strong>串是一种特殊的线性表， 其特殊性体现在数据元素是一个字符， 也就是说， 串是一种内容受限的线性表</strong>。由于现今使用的计算机硬件结构是面向数值计算的需要而设计的， 在处理字符串数据时比处理整数和浮点数要复杂得多。而且， 在不同类型的应用中， 所处理的字符串具有不同的特点， 要有效地实现字符串的处理， 就必须根据具体情况使用合适的存储结构。<strong>多维数组和广义表可以看成是线性表的一种扩充</strong>， 即线性表的数据元素自身又是一个数据结构。</p>
+<h2 id="串的定义"><a class="markdownIt-Anchor" href="#串的定义"></a> 串的定义</h2>
+<p><strong>串</strong>(string)(或<strong>字符串</strong>）是由零个或多个字符组成的有限序列， 一般记为：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mo>=</mo><mi mathvariant="normal">&quot;</mi><msub><mi>a</mi><mn>1</mn></msub><msub><mi>a</mi><mn>2</mn></msub><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><msub><mi>a</mi><mi>n</mi></msub><mi mathvariant="normal">&quot;</mi><mo stretchy="false">(</mo><mi>n</mi><mo>≥</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">s=&quot;a_1a_2...a_n&quot; (n≥0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">&quot;</span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">&quot;</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">0</span><span class="mclose">)</span></span></span></span></p>
+<ul>
+<li>s是串的名，用双引号括起来的字符序列是串的值；</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>1</mn><mo>≤</mo><mi>i</mi><mo>≤</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">a_i(1≤i≤n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.79549em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>可以是字母、数字或其他字符；</li>
+<li>串中字符的数目n称为串的<strong>长度</strong>。零个字符的串称为<strong>空串</strong>(null string) , 其长度为零。</li>
+<li>串中任意个连续的字符组成的子序列称为该串的<strong>子串</strong>。包含子串的串相应地称为<strong>主串</strong>。</li>
+<li>通常称字符在序列中的序号为该字符在串中的<strong>位置</strong>。 子串在主串中的位置则以子串的第一个字符在主串中的位置来表示。</li>
+<li>称两个串是<strong>相等</strong>的， 当且仅当这两个串的值相等。</li>
+<li>由一个或多个空格组成的串 &quot;  &quot; 称为<strong>空格串</strong> (blank string，请注意：此处不是空串）， 其长度为串中空格字符的个数。 我们用符号 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">&quot;</mi><mi>ϕ</mi><mi mathvariant="normal">&quot;</mi></mrow><annotation encoding="application/x-tex">&quot; \phi &quot;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord">&quot;</span><span class="mord mathdefault">ϕ</span><span class="mord">&quot;</span></span></span></span> 来表示空串。</li>
+</ul>
+<h2 id="串的类型定义-存储结构及其运算"><a class="markdownIt-Anchor" href="#串的类型定义-存储结构及其运算"></a> 串的类型定义、存储结构及其运算</h2>
+<h3 id="串的抽象类型定义"><a class="markdownIt-Anchor" href="#串的抽象类型定义"></a> 串的抽象类型定义</h3>
+<p>串的逻辑结构和线性表极为相似，区别仅在于串的数据对象约束为字符集。</p>
+<p>然而，串的基本操作和线性表有很大差别。在串的基本操作中，通常以 “串的整体” 作为操作对象，如查找某个子串，插入一个子串，删除一个子串等等。</p>
+<p><strong>下面给出串的抽象数据类型定义：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ADT String&#123;</span><br><span class="line">    数据对象：D=&#123;ai|ai∈CharacterSet,i=<span class="number">1</span>,<span class="number">2</span>,...,n,n&gt;=<span class="number">0</span>&#125;</span><br><span class="line">    数据关系：Rl=&#123;&lt;ai<span class="number">-1</span>,ai&gt;|ai<span class="number">-1</span>,ai∈D,i=<span class="number">2</span>,...,n&#125;</span><br><span class="line">    基本操作：</span><br><span class="line">        StrAssign(&amp;T, chars);	<span class="comment">//赋值操作。把串T赋值为chars。</span></span><br><span class="line">        StrCopy(&amp;T,S);	<span class="comment">//复制操作。由串S复制得到串T。</span></span><br><span class="line">        StrEmpty(S);	<span class="comment">//判空操作。若S为空串，则返回true，否则返回false。</span></span><br><span class="line">    	StrCompare(S,T);<span class="comment">//比较操作。若S&gt;T, 则返回值&gt;0;若S=T，则返回值=0; 若S&lt;T，则返回值&lt;0。</span></span><br><span class="line">    	StrLength(S); <span class="comment">//求串长。返回串S的元素个数。</span></span><br><span class="line">    	SubString(&amp;Sub,S,pos,len); <span class="comment">//求子串。用Sub返回串S的第pos个字符起长度为len的子串。</span></span><br><span class="line">    	Concat(&amp;T,S1,S2); <span class="comment">//串联接。用T返回由S1和S2联接而成的新串。</span></span><br><span class="line">    	Index(S,T); <span class="comment">//定位操作。若主串S中存在与串T值相同的子串，则返回它在主串S中第一次出现的位置;否则返回值为0。</span></span><br><span class="line">    	ClearString(&amp;S); <span class="comment">//清空操作。将S清为空串。</span></span><br><span class="line">    	DestroyString(&amp;S); <span class="comment">//销毁串。将串S销毁。</span></span><br><span class="line">    	Replace(&amp;S,T,V); <span class="comment">//用V替换主串S中出现的所有与T相等的不重叠的子串。</span></span><br><span class="line">    	StrInsert(&amp;S,pos,T); <span class="comment">//在串 s 的第 pos 个字符之前插人串 T。</span></span><br><span class="line">    	StrDelete(&amp;S,pos,len); <span class="comment">//从串 s 中删除第 pos 个字符起长度为 len 的子串。</span></span><br><span class="line">&#125;ADT String</span><br></pre></td></tr></table></figure>
+<h3 id="串的存储结构"><a class="markdownIt-Anchor" href="#串的存储结构"></a> 串的存储结构</h3>
+<p>与线性表类似， 串也有两种基本存储结构：<strong>顺序存储</strong>和<strong>链式存储</strong>。但考虑到存储效率和算法的方便性， 串多采用顺序存储结构。</p>
+<ol>
+<li>
+<p><strong>串的顺序存储</strong></p>
+<p>类似于线性表的顺序存储结构， 用一组地址连续的存储单元存储串值的字符序列。 按照预定义的大小， 为每个定义的串变量分配一个固定长度的存储区， 则可用定长数组如下描述：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// －－－－－ 串的定长顺序存储结构－－－－－</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MaxLen 255	<span class="comment">//串的最大长度</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">char</span> ch[MaxLen+<span class="number">1</span>];	<span class="comment">//存储串的一维数组</span></span><br><span class="line">    <span class="keyword">int</span> length;	<span class="comment">//串的当前长度</span></span><br><span class="line">&#125;SString;</span><br></pre></td></tr></table></figure>
+<p>这种定义方式是静态的， 在<strong>编译时刻就确定了串空间的大小</strong>。 而多数情况下， <strong>在操作中串值长度的变化较大， 这样为串变量设定固定大小的空间不合理</strong>。 因此最好是根据实际需要， 在程序执行过程中动态地分配和释放字符数组空间。</p>
+<p>在C语言中，存在一个称之为 “堆”（Heap） 的自由存储区，并用malloc ()和free ()函数来完成动态存储管理。利用 malloc() 为每个新产生的串分配一块实际串长所需的存储空间，若分配成功,则返回一个指向起始地址的指针，作为串的基地址，这个串由ch 指针来指示；若分配失败，则返回NULL。已分配的空间可用free()释放掉。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// －－－－－ 串的堆式顺序存储结构 －－－－－</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">char</span> *ch;	<span class="comment">//若是非空串， 则按串长分配存储区， 否则 ch 为 NULL</span></span><br><span class="line">    <span class="keyword">int</span> length;	<span class="comment">//串的当前长度</span></span><br><span class="line">&#125;HString;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>串的链式存储</strong></p>
+<p>类似于线性表的链式存储结构，也可采用链表方式存储串值。由于串的特殊性（每个元素只有一个字符)，在具体实现时，每个结点既可以存放一个字符，也可以存放多个字符。<strong>每个结点称为块</strong>，整个链表称为<strong>块链结构</strong>。下图(a)是结点大小为4(即每个结点存放4个字符）的链表，图(b)是结点大小为1的链表。 当结点大小大于1时，由于串长不一定是结点大小的整倍数，则链表中的最后一个结点不一定全被串值占满，此时通常补上 “#”  或其他的非串值字符（通常 “#” 不属于串的字符集，是一个特殊的符号）。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E4%B8%B2%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%B9%BF%E4%B9%89%E8%A1%A8/image.je0zhavqzao.png" alt="image"></p>
+<p>为了便于进行串的操作，当以链表存储串值时，除头指针外， 还可附设一个尾指针指示链表中的最后一个结点，并给出当前串的长度。定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// －－－－－ 串的链式存储结构 －－－－－</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CHUNKSIZE 80	<span class="comment">//可由用户定义的块大小</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Chunk</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">char</span> ch[CHUNKSIZE];</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Chunk</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;Chunk;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    Chunk *head,*tail;	<span class="comment">//串的头和尾指针</span></span><br><span class="line">    <span class="keyword">int</span> length;		<span class="comment">//串的当前长度</span></span><br><span class="line">&#125;LString;</span><br></pre></td></tr></table></figure>
+<p>在链式存储方式中，<strong>结点大小的选择直接影响着串处理的效率</strong>。存储密度小（如结点大小为1时），运算处理方便，然而，存储占用量大。如果在串处理过程中需进行内、 外存交换的话， 则会因为内外存交换操作过多而影响处理的总效率。 应该看到，串的字符集的大小也是一个重要因素。 一般来说，字符集小，则字符的机内编码就短，这也影响串值存储方式的选取。</p>
+</li>
+</ol>
+<h3 id="串的模式匹配算法"><a class="markdownIt-Anchor" href="#串的模式匹配算法"></a> 串的模式匹配算法</h3>
+<p>子串的定位运算通常称为串的<strong>模式匹配</strong>或<strong>串匹配</strong>。此运算的应用非常广泛，比如在搜索引擎、拼写检查、 语言翻译、数据压缩等应用中， 都需要进行串匹配。</p>
+<p>串的模式匹配设有两个字符串S和T, 设S为主串，也称<strong>正文串</strong>；设T为子串，也称为<strong>模式串</strong>。在主串S中查找与模式T相匹配的子串，如果匹配成功， 确定相匹配的子串中的第一个字符在主串S中出现的位置。</p>
+<p>著名的模式匹配算法有<strong>BF</strong>算法和<strong>KMP</strong>算法， 下面详细介绍这两种算法。</p>
+<p><strong>一、BF算法</strong></p>
+<p>最简单直观的模式匹配算法是 <strong>BF (Brute-Force)</strong>  暴力匹配算法。</p>
+<p>模式匹配不一定是从主串的第一个位置开始， 可以指定主串中查找的起始位置 <strong>pos</strong>。如果采用字符串顺序存储结构， 可以写出不依赖于其他串操作的匹配算法。</p>
+<p><strong>二、KMP算法</strong></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://alonscholar.github.io/2021/08/28/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC4%E7%AB%A0%20%E4%B8%B2%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%B9%BF%E4%B9%89%E8%A1%A8/" title="数据结构(严蔚敏)-第4章 串、数组和广义表" target="_blank" rel="external">https://alonscholar.github.io/2021/08/28/数据结构(严蔚敏)-第4章 串、数组和广义表/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/alonscholar" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/alonscholar" target="_blank"><span class="text-dark">AlonScholar</span><small class="ml-1x">Student &amp; Developer</small></a></h3>
+        <div>一个对生活以及编码充满热爱的大学生。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2021/08/24/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC3%E7%AB%A0%20%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" title="数据结构(严蔚敏)-第3章 栈和队列"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="wechat,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/alonscholar" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://weixin.qq.com/" target="_blank" title="Wechat" data-toggle=tooltip data-placement=top><i class="icon icon-wechat"></i></a></li>
+        
+        <li><a href="https://im.qq.com/index" target="_blank" title="Qq" data-toggle=tooltip data-placement=top><i class="icon icon-qq"></i></a></li>
+        
+        <li><a href="https://mail.qq.com/" target="_blank" title="Email" data-toggle=tooltip data-placement=top><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="https://user.qzone.qq.com/2530394412" target="_blank" title="Qzone" data-toggle=tooltip data-placement=top><i class="icon icon-qzone"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2021 Alon Scholar
+        
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'da03f167d67633a2edee',
+    clientSecret: '3f1758092cf2afcd56f35b5e37fd6b6cd1c5aeb3',
+    repo: 'comment-warehouse',
+    owner: 'alonscholar',
+    admin: ['alonscholar'],
+    id: md5(location.pathname),
+    distractionFreeMode: true,
+    language: 'zh-CN',
+    proxy: 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'
+  })
+  gitalk.render('comments')
+  </script>
+
+      
+
+
+
+
+
+
+
+</body>
+</html>
