@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>数据结构(严蔚敏)-第5章 树和二叉树 | Alon&#39;s blog</title>
+  <meta name="description" content="树和二叉树 树结构是一类重要的非线性数据结构。直观来看，树是以分支关系定义的层次结构。树结构在客观世界中广泛存在，如人类社会的族谱和各种社会组织机构都可用树来形象表示。树在计算机领域中也得到广泛应用，尤以二叉树最为常用。如在操作系统中，用树来表示文件目录的组织结构，在编译系统中，用树来表示源程序的语法结构，在数据库系统中，树结构也是信息的重要组织形式之一。  树和二叉树的定义  树的定义 树(T">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构(严蔚敏)-第5章 树和二叉树">
+<meta property="og:url" content="https://alonscholar.github.io/2021/08/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC5%E7%AB%A0%20%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/index.html">
+<meta property="og:site_name" content="AlonScholar">
+<meta property="og:description" content="树和二叉树 树结构是一类重要的非线性数据结构。直观来看，树是以分支关系定义的层次结构。树结构在客观世界中广泛存在，如人类社会的族谱和各种社会组织机构都可用树来形象表示。树在计算机领域中也得到广泛应用，尤以二叉树最为常用。如在操作系统中，用树来表示文件目录的组织结构，在编译系统中，用树来表示源程序的语法结构，在数据库系统中，树结构也是信息的重要组织形式之一。  树和二叉树的定义  树的定义 树(T">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.1snlu7sniveo.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.y99zwnb80u8.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.7k4ldf2nvg40.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.35kfs7nqx5c0.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.6vnftcmc0nw0.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.1kwybra1r4xs.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.1c75cred95z4.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.3hq3zrrbbm00.png">
+<meta property="article:published_time" content="2021-08-31T05:43:35.000Z">
+<meta property="article:modified_time" content="2021-08-31T03:51:11.989Z">
+<meta property="article:author" content="Alon Scholar">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.1snlu7sniveo.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://alonscholar.github.io/2021/08/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC5%E7%AB%A0%20%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="AlonScholar" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    <link href="//cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css" rel="stylesheet">
+  
+  
+  
+  
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css">
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/alonscholar" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">AlonScholar</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Student &amp; Developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> ShanDong, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/alonscholar" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://weixin.qq.com/" target="_blank" title="Wechat" data-toggle=tooltip data-placement=top><i class="icon icon-wechat"></i></a></li>
+        
+        <li><a href="https://im.qq.com/index" target="_blank" title="Qq" data-toggle=tooltip data-placement=top><i class="icon icon-qq"></i></a></li>
+        
+        <li><a href="https://mail.qq.com/" target="_blank" title="Email" data-toggle=tooltip data-placement=top><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="https://user.qzone.qq.com/2530394412" target="_blank" title="Qzone" data-toggle=tooltip data-placement=top><i class="icon icon-qzone"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎来到我的个人网站!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a><span class="category-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 13px;">数据结构</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13px;">算法</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/08/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC5%E7%AB%A0%20%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/" class="title">数据结构(严蔚敏)-第5章 树和二叉树</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-08-31T05:43:35.000Z" itemprop="datePublished">2021-08-31</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/08/28/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC4%E7%AB%A0%20%E4%B8%B2%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%B9%BF%E4%B9%89%E8%A1%A8/" class="title">数据结构(严蔚敏)-第4章 串、数组和广义表</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-08-28T05:43:35.000Z" itemprop="datePublished">2021-08-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/08/24/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC3%E7%AB%A0%20%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" class="title">数据结构(严蔚敏)-第3章 栈和队列</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-08-24T05:43:35.000Z" itemprop="datePublished">2021-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/08/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC2%E7%AB%A0%20%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="title">数据结构(严蔚敏)-第2章 线性表</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-08-23T02:43:35.000Z" itemprop="datePublished">2021-08-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/08/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC1%E7%AB%A0%20%E7%BB%AA%E8%AE%BA/" class="title">数据结构(严蔚敏)-第1章 绪论</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-08-22T14:43:35.000Z" itemprop="datePublished">2021-08-22</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">1.</span> <span class="toc-text"> 树和二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.</span> <span class="toc-text"> 树和二叉树的定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%91%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 树的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9C%AF%E8%AF%AD"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 树的基本术语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 二叉树的定义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.</span> <span class="toc-text"> 树和二叉树的抽象数据类型定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%80%A7%E8%B4%A8%E5%92%8C%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.</span> <span class="toc-text"> 二叉树的性质和存储结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E7%A7%8D%E7%89%B9%E6%AE%8A%E7%9A%84%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 几种特殊的二叉树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 二叉树的性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 二叉树的存储结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%8D%E5%8E%86%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E7%BA%BF%E7%B4%A2%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">1.4.</span> <span class="toc-text"> 遍历二叉树和线索二叉树</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-数据结构(严蔚敏)-第5章 树和二叉树" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      数据结构(严蔚敏)-第5章 树和二叉树
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/08/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC5%E7%AB%A0%20%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/" class="article-date">
+	  <time datetime="2021-08-31T05:43:35.000Z" itemprop="datePublished">2021-08-31</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a>, <a class="article-tag-link-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/08/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC5%E7%AB%A0%20%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 4k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 14(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="树和二叉树"><a class="markdownIt-Anchor" href="#树和二叉树"></a> 树和二叉树</h1>
+<p>树结构是一类重要的非线性数据结构。直观来看，树是以分支关系定义的层次结构。树结构在客观世界中广泛存在，如人类社会的族谱和各种社会组织机构都可用树来形象表示。树在计算机领域中也得到广泛应用，尤以二叉树最为常用。如在操作系统中，用树来表示文件目录的组织结构，在编译系统中，用树来表示源程序的语法结构，在数据库系统中，树结构也是信息的重要组织形式之一。</p>
+<h2 id="树和二叉树的定义"><a class="markdownIt-Anchor" href="#树和二叉树的定义"></a> 树和二叉树的定义</h2>
+<h3 id="树的定义"><a class="markdownIt-Anchor" href="#树的定义"></a> 树的定义</h3>
+<p><strong>树</strong>(Tree)是n(n≥0)个结点的有限集，它或为空树(n=0)；或为非空树，对于非空树T：</p>
+<ul>
+<li>有且仅有一个称之为根的结点；</li>
+<li>除根结点以外的其余结点可分为 m(m&gt;0）个互不相交的有限集 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>T</mi><mn>2</mn></msub><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>T</mi><mi>m</mi></msub></mrow><annotation encoding="application/x-tex">T_1,T_2,…,T_m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，其中每一个集合本身又是一棵树，并且称为根的子树(SubTree)。</li>
+</ul>
+<p>如，在下图中，(a)是只有一个根结点的树；(b)是有13个结点的树，其中A是根，其余结点分成3个互不相交的子集：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>1</mn></msub><mo>=</mo><mo stretchy="false">{</mo><mi>B</mi><mo separator="true">,</mo><mi>E</mi><mo separator="true">,</mo><mi>F</mi><mo separator="true">,</mo><mi>K</mi><mo separator="true">,</mo><mi>L</mi><mo stretchy="false">}</mo><mo separator="true">,</mo><msub><mi>T</mi><mn>2</mn></msub><mo>=</mo><mo stretchy="false">{</mo><mi>C</mi><mo separator="true">,</mo><mi>G</mi><mo stretchy="false">}</mo><mo separator="true">,</mo><msub><mi>T</mi><mn>3</mn></msub><mo>=</mo><mo stretchy="false">{</mo><mi>D</mi><mo separator="true">,</mo><mi>H</mi><mo separator="true">,</mo><mi>I</mi><mo separator="true">,</mo><mi>J</mi><mo separator="true">,</mo><mi>M</mi><mo stretchy="false">}</mo><mi mathvariant="normal">。</mi></mrow><annotation encoding="application/x-tex">T_1=\{B,E, F, K, L\}, T_2=\{C,G\},T_3=\{D, H, I, J, M\}。</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">L</span><span class="mclose">}</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">G</span><span class="mclose">}</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.09618em;">J</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mclose">}</span><span class="mord cjk_fallback">。</span></span></span></span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>1</mn></msub><mi mathvariant="normal">、</mi><msub><mi>T</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">T_1、T_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord cjk_fallback">、</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">T_3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>都是根A的子树，且本身也是一棵树。例如<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">T_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，其根为B，其余结点分为两个互不相交的子集： <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>11</mn></msub><mo>=</mo><mo stretchy="false">{</mo><mi>E</mi><mo separator="true">,</mo><mi>K</mi><mo separator="true">,</mo><mi>L</mi><mo stretchy="false">}</mo><mo separator="true">,</mo><msub><mi>T</mi><mn>12</mn></msub><mo>=</mo><mo stretchy="false">{</mo><mi>F</mi><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">T_{11}=\{E,K,L\},T_{12}=\{F\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">L</span><span class="mclose">}</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mclose">}</span></span></span></span>。<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>11</mn></msub></mrow><annotation encoding="application/x-tex">T_{11}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>12</mn></msub></mrow><annotation encoding="application/x-tex">T_{12}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>都是B的子树。而<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>11</mn></msub></mrow><annotation encoding="application/x-tex">T_{11}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>中E是根，{K}和{L}是E的两棵互不相交的子树，其本身又是只有一个根结点的树。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.1snlu7sniveo.png" alt="image"></p>
+<p>显然，<strong>树的定义是递归的</strong>，即在树的定义中又用到了其自身，树是一种递归的数据结构。树作为一种逻辑结构，同时也是一种分层结构，具有以下几个性质:</p>
+<ul>
+<li>树的根结点没有前驱，除根结点外的所有结点有且只有一个前驱。</li>
+<li>树中所有结点可以有零个或多个后继。</li>
+<li>树中的结点数等于所有结点的度数加1。</li>
+<li>度为m的树中第i层上至多有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>m</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">m^{i-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.824664em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">m</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.824664em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span>个结点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mi>i</mi><mo>≥</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(i ≥1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span>。</li>
+<li>高度为h的m叉树至多有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><msup><mi>m</mi><mi>h</mi></msup><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mo stretchy="false">(</mo><mi>m</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(m^h-1)/(m-1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.099108em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">m</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">h</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord">/</span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span>个结点。</li>
+<li>具有n个结点的m叉树的最小高度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">[</mo><msub><mo><mi>log</mi><mo>⁡</mo></mo><mi>m</mi></msub><mrow><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">(</mo><mi>m</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[\log_m {(n(m-1)+1)}]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.057252em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mclose">)</span></span><span class="mclose">]</span></span></span></span>。</li>
+</ul>
+<p>树适合于表示具有层次结构的数据。树中的某个结点（除根结点外）最多只和上一层的一个结点（即其父结点）有直接关系，根结点没有直接上层结点，因此在n个结点的树中有n-1条边。而树中每个结点与其下一层的零个或多个结点（即其子女结点）有直接关系。</p>
+<h3 id="树的基本术语"><a class="markdownIt-Anchor" href="#树的基本术语"></a> 树的基本术语</h3>
+<table>
+<thead>
+<tr>
+<th>名词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>结点</strong></td>
+<td>树中的一个独立单元。包含一个数据元素及若干指向其子树的分支。</td>
+</tr>
+<tr>
+<td><strong>结点的度</strong></td>
+<td>结点拥有的子树数称为结点的度。如上图(b)中，A的度为3，C度为1，F度为0。</td>
+</tr>
+<tr>
+<td><strong>树的度</strong></td>
+<td>树的度是树内各结点度的最大值。</td>
+</tr>
+<tr>
+<td><strong>叶子</strong></td>
+<td>度为 0 的结点称为叶子或终端结点。</td>
+</tr>
+<tr>
+<td><strong>非终端结点</strong></td>
+<td>度不为 0 的结点称为非终端结点或<strong>分支结点</strong>。除根结点之外，非终端结点也称为内部结点。</td>
+</tr>
+<tr>
+<td><strong>双亲和孩子</strong></td>
+<td>结点的子树的根称为该结点的孩子，相应地，该结点称为孩子的双亲。如上图(b)中，B的双亲为A，B的孩子有E和F。</td>
+</tr>
+<tr>
+<td><strong>兄弟</strong></td>
+<td>同一个双亲的孩子之间互称兄弟。例如上图(b)中，H、I 和 J 互为兄弟。</td>
+</tr>
+<tr>
+<td><strong>祖先</strong></td>
+<td>从根到该结点所经分支上的所有结点。例如上图(b)中，M 的祖先为 A 、 D 和H。</td>
+</tr>
+<tr>
+<td><strong>子孙</strong></td>
+<td>以某结点为根的子树中的任一结点都称为该结点的子孙。例如上图(b)中，B 的子孙为E、K、 L 和F。</td>
+</tr>
+<tr>
+<td><strong>层次</strong></td>
+<td>结点的层次从根开始定义起，根为第一层，根的孩子为第二层。树中任一结点的层次等于其双亲结点的层次加 1。</td>
+</tr>
+<tr>
+<td><strong>堂兄弟</strong></td>
+<td>双亲在同一层的结点互为堂兄弟。例如，结点 G 与E 、 F、 H 、 I 、 J互为堂兄弟。</td>
+</tr>
+<tr>
+<td><strong>树的深度</strong></td>
+<td>树中结点的最大层次称为树的深度或高度。如上图(b)中，树的深度为4。</td>
+</tr>
+<tr>
+<td><strong>有序树和无序树</strong></td>
+<td>如果将树中结点的各子树看成从左至右是有次序的（即不能互换），则称该树为有序树，否则称为无序树。在有序树中最左边的子树的根称为第一个孩子，最右边的称为最后一个孩子。</td>
+</tr>
+<tr>
+<td><strong>路径和路径长度</strong>。</td>
+<td>树中两个结点之间的路径是由这两个结点之间所经过的结点序列构成的,而路径长度是路径上所经过的边的个数。由于树中的分支是有向的，即从双亲指向孩子，所以树中的路径是从上向下的，同一双亲的两个孩子之间不存在路径。</td>
+</tr>
+<tr>
+<td><strong>森林</strong></td>
+<td>森林是m (m≥0）棵互不相交的树的集合。森林的概念与树的概念十分相近，因为只要把树的根结点删去就成了森林。反之，只要给m棵独立的树加上一个结点，并把这m棵树作为该结点的子树，则森林就变成了树。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="二叉树的定义"><a class="markdownIt-Anchor" href="#二叉树的定义"></a> 二叉树的定义</h3>
+<p><strong>二叉树</strong>(Binary Tree)是n(n≥0)个结点所构成的集合，它或为空树(n=0); 或为非空树，对于非空树T:</p>
+<ul>
+<li>有且仅有一个称之为根的结点；</li>
+<li>除根结点以外的其余结点分为两个互不相交的子集<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">T_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">T_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, 分别称为T的左子树和右子树，且<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">T_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">T_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>本身又都是二叉树。</li>
+</ul>
+<p>二叉树与树一样具有递归性质，<strong>二叉树与树的区别</strong>主要有以下两点：</p>
+<ul>
+<li>二叉树每个结点至多只有两棵子树（即二叉树中不存在度大于2 的结点）；</li>
+<li>二叉树的子树有左右之分，其次序不能任意颠倒。</li>
+</ul>
+<p>二叉树是有序树，若将其左、右子树颠倒，则成为另一棵不同的二叉树。即使树中结点只有一棵子树，也要区分它是左子树还是右子树。二叉树的5种基本形态如下图所示。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.y99zwnb80u8.png" alt="image"></p>
+<h2 id="树和二叉树的抽象数据类型定义"><a class="markdownIt-Anchor" href="#树和二叉树的抽象数据类型定义"></a> 树和二叉树的抽象数据类型定义</h2>
+<p>根据树的结构定义，加上树的一组基本操作就构成了<strong>树的抽象数据类型定义</strong>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">ADT Tree&#123;</span><br><span class="line">    数据对象D：D 是具有相同特性的数据元素的集合。</span><br><span class="line">    数据关系R：若 D 为空集，则称为空树；其余略。</span><br><span class="line">    基本操作P：</span><br><span class="line">        <span class="built_in">InitTree</span>(&amp;T); <span class="comment">//构造空树T。</span></span><br><span class="line">    	<span class="built_in">DestroyTree</span>(&amp;T); <span class="comment">//销毁树T。</span></span><br><span class="line">    	<span class="built_in">CreateTree</span>(&amp;T,definition); <span class="comment">//按definition构造树T。</span></span><br><span class="line">    	<span class="built_in">ClearTree</span>(&amp;T); <span class="comment">//将树T清为空树。</span></span><br><span class="line">    	<span class="built_in">TreeEmpty</span>(T); <span class="comment">//若 T 为空树，则返回 true, 否则 false。</span></span><br><span class="line">    	<span class="built_in">TreeDepth</span>(T); <span class="comment">//返回T的深度。</span></span><br><span class="line">    	<span class="built_in">Root</span>(T); <span class="comment">//返回T的根。</span></span><br><span class="line">    	<span class="built_in">Value</span>(T,cur_e); <span class="comment">//返回 cur_e 的值。</span></span><br><span class="line">    	<span class="built_in">Assign</span>(T,cur_e,value); <span class="comment">//结点 cur_e 赋值为 value。</span></span><br><span class="line">    	<span class="built_in">Parent</span>(T,cur_e); <span class="comment">//若 cur_e是 T 的非根结点，则返回它的双亲，否则函数值为“空”。</span></span><br><span class="line">    	<span class="built_in">LeftChild</span>(T,cur_e); <span class="comment">//若 cur_e是T 的非叶子结点，则返回它的最左孩子，否则返回“空”。</span></span><br><span class="line">    	<span class="built_in">RightSibling</span>(T,cur_e); <span class="comment">//若 cur_e 有右兄弟，则返回它的右兄弟，否则函数值为“空”。</span></span><br><span class="line">    	<span class="built_in">InsertChild</span>(&amp;T,p,i,c); <span class="comment">//插入c为T中p指结点的第i棵子树。</span></span><br><span class="line">    	<span class="built_in">DeleteChild</span>(&amp;T,p,i); <span class="comment">//删除T中 p 所指结点的第i棵子树。</span></span><br><span class="line">    	<span class="built_in">TraverseTree</span>(T); <span class="comment">//按某种次序对T的每个结点访问一次。</span></span><br><span class="line">&#125;ADT Tree</span><br></pre></td></tr></table></figure>
+<p><strong>二叉树的抽象数据类型定义</strong>如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">ADT BinaryTree&#123;</span><br><span class="line">    数据对象D：D 是具有相同特性的数据元素的集合。</span><br><span class="line">    数据关系R：若 D=∮，则R=∮，称BinaryTree为空二叉树；其余略。</span><br><span class="line">    基本操作P：</span><br><span class="line">        <span class="built_in">InitBiTree</span>(&amp;T); <span class="comment">//构造空二叉树T。</span></span><br><span class="line">    	<span class="built_in">DestroyBiTree</span>(&amp;T); <span class="comment">//销毁二叉树T。</span></span><br><span class="line">    	<span class="built_in">CreateBiTree</span>(&amp;T,definition); <span class="comment">//按definition构造二叉树T。</span></span><br><span class="line">    	<span class="built_in">ClearBiTree</span>(&amp;T); <span class="comment">//将二叉树T清为空树。</span></span><br><span class="line">    	<span class="built_in">BiTreeEmpty</span>(T); <span class="comment">//若T为空二叉树，则返回true, 否则false。</span></span><br><span class="line">    	<span class="built_in">BiTreeDepth</span>(T); <span class="comment">//返回T的深度。</span></span><br><span class="line">    	<span class="built_in">Root</span>(T); <span class="comment">//返回T的根。</span></span><br><span class="line">    	<span class="built_in">Value</span>(T,e); <span class="comment">//返回e的值。</span></span><br><span class="line">    	<span class="built_in">Assign</span>(T,&amp;e,value); <span class="comment">//结点e赋值为value。</span></span><br><span class="line">    	<span class="built_in">Parent</span>(T,e); <span class="comment">//若e是T的非根结点，则返回它的双亲，否则返回“空”。</span></span><br><span class="line">    	<span class="built_in">LeftChild</span>(T,e); <span class="comment">//返回e的左孩子。若e无左孩子，则返回“空”。</span></span><br><span class="line">    	<span class="built_in">RightChild</span>(T,e); <span class="comment">//返回e的右孩子。若e无右孩子，则返回“空”。</span></span><br><span class="line">    	<span class="built_in">LeftSibling</span>(T, e); <span class="comment">//返回e的左兄弟。若e是T的左孩子或无左兄弟，则返回 “空”。</span></span><br><span class="line">    	<span class="built_in">RightSibling</span>(T,e); <span class="comment">//返回e的右兄弟。若e是T的右孩子或无右兄弟，则返回 “空”。</span></span><br><span class="line">    	<span class="built_in">InsertChild</span>(&amp;T,p,LR,c); <span class="comment">//根据LR为0或1,插入c为T中p所指结点的左或右子树。p所指结点的原有左或右子树则成为c的右子树。</span></span><br><span class="line">    	<span class="built_in">DeleteChild</span>(&amp;T, p, LR); <span class="comment">//根据LR为0或1, 删除T中p所指结点的左或右子树。</span></span><br><span class="line">    	<span class="built_in">PreOrderTraverse</span>(T); <span class="comment">//先序遍历T, 对每个结点访问一次。</span></span><br><span class="line">    	<span class="built_in">InOrderTraverse</span>(T); <span class="comment">//中序遍历T, 对每个结点访问一次。</span></span><br><span class="line">    	<span class="built_in">PostOrderTraverse</span>(T); <span class="comment">//后序遍历T, 对每个结点访问一次。</span></span><br><span class="line">    	<span class="built_in">LevelOrderTraverse</span>(T); <span class="comment">//层序遍历T, 对每个结点访问一次。</span></span><br><span class="line">&#125;ADT BinaryTree</span><br></pre></td></tr></table></figure>
+<h2 id="二叉树的性质和存储结构"><a class="markdownIt-Anchor" href="#二叉树的性质和存储结构"></a> 二叉树的性质和存储结构</h2>
+<h3 id="几种特殊的二叉树"><a class="markdownIt-Anchor" href="#几种特殊的二叉树"></a> 几种特殊的二叉树</h3>
+<ol>
+<li>
+<p><strong>满二叉树</strong></p>
+<p>一棵高度为h，且含有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mi>h</mi></msup><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2^h-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.932438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">h</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>个结点的二叉树称为满二叉树，即树中的每层都含有最多的结点，如图(a)所示。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.7k4ldf2nvg40.png" alt="image"></p>
+<p>可以对满二叉树的结点进行连续编号，约定编号从根结点起，自上而下，自左至右。由此可引出完全二叉树的定义。</p>
+</li>
+<li>
+<p><strong>完全二叉树</strong></p>
+<p>高度为h、有n个结点的二叉树，当且仅当其每个结点都与高度为h的满二叉树中编号为1~n的结点一一对应时，称为完全二叉树，如图(b)所示。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.35kfs7nqx5c0.png" alt="image"></p>
+<p>其特点如下:</p>
+<ul>
+<li>若<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>≤</mo><mo stretchy="false">⌊</mo><mrow><mi>n</mi><mi mathvariant="normal">/</mi><mn>2</mn></mrow><mo stretchy="false">⌋</mo></mrow><annotation encoding="application/x-tex">i≤\lfloor {n/2}\rfloor</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.79549em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">⌊</span><span class="mord"><span class="mord mathdefault">n</span><span class="mord">/</span><span class="mord">2</span></span><span class="mclose">⌋</span></span></span></span>，则结点 i 为分支结点，否则为叶子结点。</li>
+<li>叶子结点只可能在层次最大的两层上出现。对于最大层次中的叶子结点，都依次排列在该层最左边的位置上。</li>
+<li>若有度为1的结点，则只可能有一个，且该结点只有左孩子而无右孩子（重要特征)。</li>
+<li>按层序编号后，一旦出现某结点（编号为i）为叶子结点或只有左孩子，则编号大于 i 的结点均为叶子结点。</li>
+<li>若n为奇数，则每个分支结点都有左孩子和右孩子；若n为偶数，则编号最大的分支结点（编号为n/2）只有左孩子，没有右孩子，其余分支结点左、右孩子都有。</li>
+</ul>
+</li>
+<li>
+<p><strong>二叉排序树</strong></p>
+<p>左子树上所有结点的关键字均小于根结点的关键字;右子树上的所有结点的关键字均大于根结点的关键字;左子树和右子树又各是一棵二叉排序树。</p>
+</li>
+<li>
+<p><strong>平衡二叉树</strong></p>
+<p>树上任一结点的左子树和右子树的深度之差不超过1。</p>
+</li>
+</ol>
+<h3 id="二叉树的性质"><a class="markdownIt-Anchor" href="#二叉树的性质"></a> 二叉树的性质</h3>
+<p>二叉树具有下列重要特性：</p>
+<ul>
+<li><strong>性质1</strong>：在二叉树的第i层上至多有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{i-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.824664em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.824664em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span>个结点(i≥1)。</li>
+<li><strong>性质2</strong>：深度为k的二叉树至多有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mi>k</mi></msup><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2^{k}-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.932438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>个结点(k≥1)。</li>
+<li><strong>性质3</strong>：对任何一棵二叉树T, 如果其终端结点数为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>n</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">n_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，度为2的结点数为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>n</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">n_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，则<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>n</mi><mn>0</mn></msub><mo>=</mo><msub><mi>n</mi><mn>2</mn></msub><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n_0=n_2+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>。</li>
+<li><strong>性质4</strong>：具有n(n&gt;0)个结点的<strong>完全二叉树</strong>的高(深)度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">⌈</mo><msub><mo><mi>log</mi><mo>⁡</mo></mo><mn>2</mn></msub><mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">⌉</mo></mrow><annotation encoding="application/x-tex">\lceil \log_2 (n+ 1)\rceil</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">⌈</span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.20696799999999996em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">⌉</span></span></span></span>或<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">⌊</mo><msub><mo><mi>log</mi><mo>⁡</mo></mo><mn>2</mn></msub><mi>n</mi><mo stretchy="false">⌋</mo><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\lfloor \log_2n \rfloor+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">⌊</span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.20696799999999996em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mclose">⌋</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>。</li>
+<li><strong>性质5</strong>：对完全二叉树按从上到下、从左到右的顺序依次编号1,2,…, n，则有以下关系:
+<ul>
+<li>当i&gt;1时，结点 i 的双亲的编号为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">⌊</mo><mi>i</mi><mi mathvariant="normal">/</mi><mn>2</mn><mo stretchy="false">⌋</mo></mrow><annotation encoding="application/x-tex">\lfloor i/2\rfloor</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">⌊</span><span class="mord mathdefault">i</span><span class="mord">/</span><span class="mord">2</span><span class="mclose">⌋</span></span></span></span>，即当 i 为偶数时，其双亲的编号为i/2，它是双亲的左孩子;当 i 为奇数时，其双亲的编号为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">(i- 1)/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord">/</span><span class="mord">2</span></span></span></span>，它是双亲的右孩子。</li>
+<li>当2i≤n时，结点 i 的左孩子编号为2i，否则无左孩子。</li>
+<li>当2i+1≤n时，结点 i 的右孩子编号为2i+1，否则无右孩子。</li>
+<li>结点 i 所在层次（深度）为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">⌊</mo><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>i</mi><mo stretchy="false">⌋</mo><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\lfloor log_2i\rfloor+ 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">⌊</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">i</span><span class="mclose">⌋</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="二叉树的存储结构"><a class="markdownIt-Anchor" href="#二叉树的存储结构"></a> 二叉树的存储结构</h3>
+<p>类似线性表，二叉树的存储结构也可采用顺序存储和链式存储两种方式。</p>
+<ol>
+<li>
+<p><strong>顺序存储结构</strong></p>
+<p>顺序存储结构使用一组地址连续的存储单元来存储数据元素，为了能够在存储结构中反映出结点之间的逻辑关系，必须将二叉树中的结点依照一定的规律安排在这组单元中。</p>
+<p><strong>对于完全二叉树，只要从根起按层序存储即可</strong>，依次自上而下、自左至右存储结点元素，即将完全二叉树上编号为i的结点元素存储在一维数组中下标为i-1的分量中。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.6vnftcmc0nw0.png" alt="image"></p>
+<p><strong>对于一般二叉树，则应将其每个结点与完全二叉树上的结点相对照，存储在一维数组的相应分量中</strong>，如下图所示，图中以&quot;0&quot;表示不存在此结点。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.1kwybra1r4xs.png" alt="image"></p>
+<p>由此可见，这种顺序存储结构仅适用于完全二叉树。因为，在最坏的情况下，一个深度为K且只有K个结点的单支树（树中不存在度为2的结点）却需要长度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mi>k</mi></msup><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2^k-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.932438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>的一维数组。这造成了存储空间的极大浪费， 所以对于一般二叉树，更适合采取下面的链式存储结构。</p>
+</li>
+<li>
+<p><strong>链式存储结构</strong></p>
+<p>设计不同的结点结构可构成不同形式的链式存储结构。由二叉树的定义得知，二叉树的结点由一个数据元素和分别指向其左、 右子树的两个分支构成，则表示二叉树的链表中的结点至少包含3个域：<strong>数据域和左、 右指针域</strong>，如下图(b) 所示。有时，<strong>为了便于找到结点的双亲，还可在结点结构中增加一个指向其双亲结点的指针域</strong>，如图©所示。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.1c75cred95z4.png" alt="image"></p>
+<p>利用上图中两种结点结构所得的二叉树的存储结构分别称为二叉链表和三叉链表，如下图所示。链表的头指针指向二叉树的根结点。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.3hq3zrrbbm00.png" alt="image"></p>
+<p>在不同的存储结构中，实现二叉树的操作方法也不同，如找结点x的双亲, 在三叉链表中很容易实现，而在二叉链表中则需从根指针出发巡查。由此，在具体应用中采用什么存储结构，除根据二叉树的形态之外还应考虑需进行何种操作。在下一节的二叉树遍历及其应用的算法均采用以下定义的二叉链表形式实现。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// －－－－ 二叉树的二叉链表存储表示 －－－－</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span>&#123;</span></span><br><span class="line">    TElemType data;  <span class="comment">//结点数据域</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>,*<span class="title">rchild</span>;</span>  <span class="comment">//左右孩子指针</span></span><br><span class="line">&#125;BiTNode,*BiTree;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="遍历二叉树和线索二叉树"><a class="markdownIt-Anchor" href="#遍历二叉树和线索二叉树"></a> 遍历二叉树和线索二叉树</h2>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://alonscholar.github.io/2021/08/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC5%E7%AB%A0%20%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/" title="数据结构(严蔚敏)-第5章 树和二叉树" target="_blank" rel="external">https://alonscholar.github.io/2021/08/31/数据结构(严蔚敏)-第5章 树和二叉树/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/alonscholar" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/alonscholar" target="_blank"><span class="text-dark">AlonScholar</span><small class="ml-1x">Student &amp; Developer</small></a></h3>
+        <div>一个对生活以及编码充满热爱的大学生。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2021/08/28/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC4%E7%AB%A0%20%E4%B8%B2%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%B9%BF%E4%B9%89%E8%A1%A8/" title="数据结构(严蔚敏)-第4章 串、数组和广义表"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="wechat,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/alonscholar" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://weixin.qq.com/" target="_blank" title="Wechat" data-toggle=tooltip data-placement=top><i class="icon icon-wechat"></i></a></li>
+        
+        <li><a href="https://im.qq.com/index" target="_blank" title="Qq" data-toggle=tooltip data-placement=top><i class="icon icon-qq"></i></a></li>
+        
+        <li><a href="https://mail.qq.com/" target="_blank" title="Email" data-toggle=tooltip data-placement=top><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="https://user.qzone.qq.com/2530394412" target="_blank" title="Qzone" data-toggle=tooltip data-placement=top><i class="icon icon-qzone"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2021 Alon Scholar
+        
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'da03f167d67633a2edee',
+    clientSecret: '3f1758092cf2afcd56f35b5e37fd6b6cd1c5aeb3',
+    repo: 'comment-warehouse',
+    owner: 'alonscholar',
+    admin: ['alonscholar'],
+    id: md5(location.pathname),
+    distractionFreeMode: true,
+    language: 'zh-CN',
+    proxy: 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'
+  })
+  gitalk.render('comments')
+  </script>
+
+      
+
+
+
+
+
+
+
+</body>
+</html>
