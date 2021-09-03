@@ -41,8 +41,10 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.g8skqer4qp4.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.633va6jptcs0.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.421llmoubk00.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.1ne2a7ze3ev4.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/1630597118524.44d71yvpzyi0.png">
 <meta property="article:published_time" content="2021-08-31T05:43:35.000Z">
-<meta property="article:modified_time" content="2021-09-02T05:20:08.728Z">
+<meta property="article:modified_time" content="2021-09-03T00:20:25.714Z">
 <meta property="article:author" content="Alon Scholar">
 <meta property="article:tag" content="数据结构">
 <meta property="article:tag" content="算法">
@@ -396,10 +398,10 @@
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/08/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC5%E7%AB%A0%20%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/#comments" class="article-comment-link">评论</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 9.7k(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 11.1k(字)</span>
 	
 	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 36(分)</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 42(分)</span>
 	
 
       </div>
@@ -841,9 +843,52 @@
 </li>
 <li>
 <p><strong>先序线索二叉树</strong></p>
+<p>先序线索二叉树的思想类似，再先序遍历的基础上对二叉树进行线索化。构建出来的先序线索二叉树如下图所示。先序序列为ABCDF，其中将C的左链域指向前驱B，右链域指向后继D；结点D无左孩子，将左链域指向前驱C，无右孩子，将右链域指向后继F；结点F无左孩子，将左链域指向前驱D，无右孩子，也无后继故置空。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.1ne2a7ze3ev4.png" alt="image"></p>
+<p><strong>以结点p为根的子树先序线索化：</strong></p>
+<ul>
+<li>如果p非空，进行如下操作。</li>
+<li>如果p的左孩子为空，则给p加上左线索，将其ltag置为1，让p的左孩子指针指向pre(前驱)；</li>
+<li>如果pre不为空，并且pre的右孩子为空，则给pre加上右线索，将其rtag置为1，让pre的右孩子指针指向p(后继)；</li>
+<li>将pre指向刚访问过的结点p，即pre=p。</li>
+<li>若左指针不是线索，左子树递归线索化。</li>
+<li>若右指针不是线索，右子树递归线索化。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">ThreadNode *pre;</span><br><span class="line"><span class="comment">//先序遍历对二叉树线索化的递归算法</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PreThreading</span><span class="params">(ThreadTree p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (p)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!p-&gt;lchild) <span class="comment">//如果左子树为空</span></span><br><span class="line">        &#123;</span><br><span class="line">            p-&gt;ltag = <span class="number">1</span>;  <span class="comment">//给p加上左线索</span></span><br><span class="line">            p-&gt;lchild = pre;  <span class="comment">//p的左孩子指针指向pre (前驱）</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (pre &amp;&amp; !pre-&gt;rchild) <span class="comment">//此处需要判断第一次pre是否为空的情况。</span></span><br><span class="line">        &#123;</span><br><span class="line">            pre-&gt;rtag = <span class="number">1</span>;   <span class="comment">//给pre加上右线索</span></span><br><span class="line">            pre-&gt;rchild = p; <span class="comment">//pre的右孩子指针指向p (后继）</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        pre = p;                 <span class="comment">//保持pre指向p的前驱</span></span><br><span class="line">        <span class="keyword">if</span>(p-&gt;ltag==<span class="number">0</span>)  <span class="comment">//若p的左指针不是线索，再进行递归</span></span><br><span class="line">            <span class="built_in">PreThreading</span>(p-&gt;lchild); <span class="comment">//左子树递归线索化</span></span><br><span class="line">        <span class="keyword">if</span>(p-&gt;rtag==<span class="number">0</span>)  <span class="comment">//若p的右指针不是线索，再进行递归</span></span><br><span class="line">            <span class="built_in">PreThreading</span>(p-&gt;rchild); <span class="comment">//右子树递归线索化</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//调用此方法完成线索化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CreatePreThread</span><span class="params">(ThreadTree T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (T != <span class="literal">NULL</span>)</span><br><span class="line">    &#123;<span class="comment">//完成线索化后，pre指向先序遍历的最后一个结点。所以还需要对最后一个结点进行处理。</span></span><br><span class="line">        <span class="built_in">PreThreading</span>(T);</span><br><span class="line">        pre-&gt;rchild = <span class="literal">NULL</span>; </span><br><span class="line">        pre-&gt;rtag = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>在先序线索二叉树中查找</strong></p>
+<p>1）查找p指针所指结点的前驱:</p>
+<ul>
+<li>若p-&gt;ltag为1，则p的左链域指示其前驱；</li>
+<li>若p-&gt;ltag为0，则说明p有左子树。此时p的前驱有两种情况：若*p是其双亲的左孩子，则其前驱为其双亲结点；否则应是其双亲的左子树上先序遍历最后访问到的结点。</li>
+</ul>
+<p>2）查找p指针所指结点的后继:</p>
+<ul>
+<li>若p-&gt;rtag为1，则p的右链指示其后继；</li>
+<li>若p-&gt;rtag为0，则说明p有右子树。按先序遍历的规则可知，*p的后继必为其左子树根（若存在）或右子树根。</li>
+</ul>
+<p><strong>先序线索二叉树的先序遍历的算法实现：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//求先序线索二叉树中结点p在先序序列下的后继</span></span><br><span class="line"><span class="function">ThreadNode* <span class="title">Nextnode</span><span class="params">(ThreadNode *p)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(p-&gt;rtag==<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> p-&gt;rchild; <span class="comment">//rtag==1 直接返回后继线索</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(p-&gt;lchild)&#123; <span class="comment">//若存在左子树，则下一个后继为左子树根</span></span><br><span class="line">            <span class="keyword">return</span> p-&gt;lchild;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> p-&gt;rchild; <span class="comment">//没有左子树，下一个后继为右子树根</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//先序线索二叉树的先序遍历</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PreOrder</span><span class="params">(ThreadNode *T)</span></span>&#123;</span><br><span class="line">    <span class="comment">//先序遍历的第一个结点为根结点</span></span><br><span class="line">    <span class="keyword">for</span>(ThreadNode *p=T;p!=<span class="literal">NULL</span>;p=<span class="built_in">Nextnode</span>(p))</span><br><span class="line">        cout&lt;&lt;p-&gt;data&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;p-&gt;ltag&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;p-&gt;rtag&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p><strong>后序线索二叉树</strong></p>
+<p>后序线索二叉树的过程:后序序列为CDBFA，结点C无左孩子，也无前驱故置空，无右孩子，将右链域指向后继D；结点D无左孩子，将左链域指向前驱C，无右孩子，将右链域指向后继B；结点F无左孩子，将左链域指向前驱B，无右孩子，将右链域指向后继A，得到的后序线索二叉树如下图所示。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/1630597118524.44d71yvpzyi0.png" alt="1630597118524"></p>
+<p><strong>后序线索化的代码如下：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//后序遍历对二叉树线索化的递归算法</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PostThreading</span><span class="params">(ThreadTree p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">if</span> (p)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="built_in">PostThreading</span>(p-&gt;lchild); <span class="comment">//左子树递归线索化</span></span><br><span class="line">      <span class="built_in">PostThreading</span>(p-&gt;rchild); <span class="comment">//右子树递归线索化</span></span><br><span class="line">      <span class="keyword">if</span> (!p-&gt;lchild)           <span class="comment">//如果左子树为空</span></span><br><span class="line">      &#123;</span><br><span class="line">         p-&gt;ltag = <span class="number">1</span>;     <span class="comment">//给p加上左线索</span></span><br><span class="line">         p-&gt;lchild = pre; <span class="comment">//p的左孩子指针指向pre (前驱）</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (pre &amp;&amp; !pre-&gt;rchild) <span class="comment">//此处需要判断第一次pre是否为空的情况。</span></span><br><span class="line">      &#123;</span><br><span class="line">         pre-&gt;rtag = <span class="number">1</span>;   <span class="comment">//给pre加上右线索</span></span><br><span class="line">         pre-&gt;rchild = p; <span class="comment">//pre的右孩子指针指向p (后继）</span></span><br><span class="line">      &#125;</span><br><span class="line">      pre = p; <span class="comment">//保持pre指向p的前驱</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>在后序线索二叉树中查找</strong></p>
+<p>1）查找p指针所指结点的前驱:</p>
+<ul>
+<li>若p-&gt;ltag为1，则p的左链指示其前驱；</li>
+<li>若p-&gt;ltag为0，当p-&gt;rtag也为0时，则p的右链指示其前驱。若-&gt;ltag为0，而p-&gt;rtag为1时，则p的左链指示其前驱。</li>
+</ul>
+<p>2）查找p指针所指结点的后继情况比较复杂，分以下情况讨论：</p>
+<ul>
+<li>若*p是二叉树的根， 则其后继为空；</li>
+<li>若*p是其双亲的右孩子， 则其后继为双亲结点；</li>
+<li>若 *p是其双亲的左孩子， 且 *p没有右兄弟， 则其后继为双亲结点；</li>
+<li>若 *p是其双亲的左孩子，且 *p有右兄弟，则其后继为双亲的右子树上按后序遍历列出的第一个结点（ 即右子树中 “最左下” 的叶结点）。</li>
+</ul>
+<p>可见在后序线索二叉树上找后继时需知道结点双亲，即需采用带标志域的三叉链表作为存储结构。这里不再进行阐述。</p>
 </li>
 </ol>
 
