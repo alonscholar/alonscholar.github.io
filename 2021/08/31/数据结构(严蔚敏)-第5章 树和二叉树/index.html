@@ -64,8 +64,11 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.21njwzbsk200.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.7khl9uwdu9w0.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.i16t92980oo.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.3bupii4mnag0.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.41h0ra2mzyi0.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.c88y7n5j5gw.png">
 <meta property="article:published_time" content="2021-08-31T05:43:35.000Z">
-<meta property="article:modified_time" content="2021-09-05T08:10:30.861Z">
+<meta property="article:modified_time" content="2021-09-05T09:27:12.924Z">
 <meta property="article:author" content="Alon Scholar">
 <meta property="article:tag" content="数据结构">
 <meta property="article:tag" content="算法">
@@ -419,10 +422,10 @@
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/08/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC5%E7%AB%A0%20%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/#comments" class="article-comment-link">评论</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 18.4k(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 19k(字)</span>
 	
 	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 69(分)</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 72(分)</span>
 	
 
       </div>
@@ -1271,7 +1274,7 @@
 <p>在构造好哈夫曼树之后，求哈夫曼编码编码的主要思想是：依次以叶子为出发点，向上回溯至根结点为止。 回溯时走左分支则生成代码0，走右分支则生成代码1。</p>
 <p><strong>根据哈夫曼树求哈夫曼编码的算法实现：</strong></p>
 <ul>
-<li>由哈夫曼树的构造算法得知，前n个元素记录的为叶子结点，后n-1个元素记录的为组件出来的父结点。所以我们遍历前n个叶子结点。</li>
+<li>由哈夫曼树的构造算法得知，前n个元素记录的为叶子结点，后n-1个元素记录的为合并出来的父结点。所以我们遍历前n个叶子结点。</li>
 <li>记录叶子结点的下标，和其父结点的下标，然后回溯判断子结点是父结点的左孩子还是右孩子，左孩子输出0，右孩子输出1。</li>
 <li>循环上述操作，不断更新孩子结点和父结点的下标，直到结点的父结点下标为0，表示已经到根结点，停止循环。</li>
 </ul>
@@ -1285,6 +1288,42 @@
 </li>
 </ol>
 <h3 id="树的应用并查集"><a class="markdownIt-Anchor" href="#树的应用并查集"></a> 树的应用—并查集</h3>
+<p>并查集是一种简单的集合表示，它支持以下3种操作：</p>
+<ul>
+<li><strong>Union(S,Root1,Root2)</strong>：把集合S中的子集合Root2并入子集合Root1。要求Root1和Root2互不相交，否则不执行合并。</li>
+<li><strong>Find(S,x)</strong>：查找集合S中单元素x所在的子集合，并返回该子集合的名字。</li>
+<li><strong>Initial(S)</strong>：将集合S中的每个元素都初始化为只有一个单元素的子集合。</li>
+</ul>
+<p><strong>通常使用树（森林）的双亲表示法作为并查集的存储结构</strong>，每个子集合以一棵树表示。所有表示子集合的树，构成表示全集合的森林，存放在双亲表示数组内。通常用数组元素的下标代表元素名，用根结点的下标代表子集合名，根结点的双亲结点为负数。</p>
+<p>若设有一个全集合为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>=</mo><mo stretchy="false">{</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mn>3</mn><mo separator="true">,</mo><mn>4</mn><mo separator="true">,</mo><mn>5</mn><mo separator="true">,</mo><mn>6</mn><mo separator="true">,</mo><mn>7</mn><mo separator="true">,</mo><mn>8</mn><mo separator="true">,</mo><mn>9</mn><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">S= \{0,1,2,3,4,5,6,7,8,9\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">6</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">7</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">8</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">9</span><span class="mclose">}</span></span></span></span>，下面介绍使用并查集的一些操作。</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>介绍</th>
+<th>图片展示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初始化</td>
+<td>每个子集合的数组值为-1。</td>
+<td><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.3bupii4mnag0.png" alt="image"></td>
+</tr>
+<tr>
+<td>集合合并</td>
+<td>子集合合并为3个更大的子集合后。子结点值为根结点下标，根结点值为集合元素个数的相反数。</td>
+<td><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.41h0ra2mzyi0.png" alt="image"></td>
+</tr>
+<tr>
+<td>两个子集合合并</td>
+<td>将其中一个子集合根结点的双亲指针指向另一个集合的根结点。<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mn>1</mn></msub><mo>∪</mo><msub><mi>S</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">S_1 ∪S_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∪</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/image.c88y7n5j5gw.png" alt="image"></td>
+</tr>
+</tbody>
+</table>
+<p>在采用树的双亲指针数组表示作为并查集的存储表示时，集合元素的编号从0到size-1。其中size是最大元素的个数。下面是并查集主要运算的实现。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIZE 100    <span class="comment">//定义集合元素的个数   </span></span></span><br><span class="line"><span class="keyword">int</span> UFSets[SIZE];   <span class="comment">//集合元素数组，使用双亲表示法</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Initial</span><span class="params">(<span class="keyword">int</span> S[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;SIZE;i++) <span class="comment">//每个自成单元素集合</span></span><br><span class="line">        S[i]=<span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> S[],<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (S[x]&gt;<span class="number">0</span>)  <span class="comment">//循环寻找x的根</span></span><br><span class="line">    &#123;</span><br><span class="line">        x=S[x];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> x;   <span class="comment">//返回树的根</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> S[],<span class="keyword">int</span> Root1,<span class="keyword">int</span> Root2)</span></span>&#123;</span><br><span class="line">    <span class="comment">//要求传入的为两个根结点，可以用Find方法找到根结点</span></span><br><span class="line">    <span class="keyword">if</span>(Root1!=Root2)&#123; <span class="comment">//若两个根结点不同</span></span><br><span class="line">        S[Root1] += S[Root2]; <span class="comment">//将集合Root2中的元素个数加到集合Root1上</span></span><br><span class="line">        S[Root2]=Root1; <span class="comment">//将根Root2连接到另一根Root1下面</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
