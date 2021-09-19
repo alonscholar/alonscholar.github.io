@@ -48,8 +48,9 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%9B%BE/image.5f29ser0dcc0.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%9B%BE/image.5ktje36rwhg0.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%9B%BE/image.3l9faog2oos0.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%9B%BE/image.23lydokalzog.png">
 <meta property="article:published_time" content="2021-09-06T10:43:35.000Z">
-<meta property="article:modified_time" content="2021-09-19T04:58:55.366Z">
+<meta property="article:modified_time" content="2021-09-19T07:38:59.946Z">
 <meta property="article:author" content="Alon Scholar">
 <meta property="article:tag" content="数据结构">
 <meta property="article:tag" content="算法">
@@ -403,10 +404,10 @@
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/09/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC6%E7%AB%A0%20%E5%9B%BE/#comments" class="article-comment-link">评论</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 11k(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 11.2k(字)</span>
 	
 	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 42(分)</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 43(分)</span>
 	
 
       </div>
@@ -786,11 +787,12 @@
 </ul>
 <p>图<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>G</mi><mn>4</mn></msub></mrow><annotation encoding="application/x-tex">G_4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">G</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>在广度优先搜索遍历的过程中会产生一个<strong>广度优先生成树</strong>，如下图所示。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%9B%BE/image.3l9faog2oos0.png" alt="image"></p>
-<p>注意：当使用邻接表存储时，因为表示方式不唯一，故得到的广度优先生成树也是不唯一的。</p>
+<p><strong>注意</strong>：<font color="red">当使用邻接表存储时，因为表示方式不唯一，故得到的广度优先生成树也是不唯一的。对于非连通图的广度优先遍历会对应成一个森林</font>。</p>
 </li>
 <li>
 <p><strong>广度优先搜索遍历的算法实现</strong></p>
 <p>可以看出，广度优先搜索遍历的特点是：尽可能先对横向进行搜索。设 x 和 y 是两个相继被访问过的顶点，若当前是以 x 为出发点进行搜索，则在访问 x 的所有未曾被访问过的邻接点之后，紧接着是以 y 为出发点进行横向搜索，并对搜索到的 y 的邻接点中尚未被访问的顶点进行访问。也就是说，先访问的顶点其邻接点亦先被访问。为此，<strong>算法实现时需引进队列保存已被访问过的顶点</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%9B%BE/image.23lydokalzog.png" alt="image"></p>
 <blockquote>
 <p><strong>算法实现：广度优先搜索遍历连通图</strong></p>
 </blockquote>
@@ -812,10 +814,12 @@
 </li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> visited[MaxVertexNum];	<span class="comment">//访问标记数组,初始值都为false</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BFS</span><span class="params">(Graph G,<span class="keyword">int</span> v)</span></span>&#123;<span class="comment">//按广度优先非递归遍历连通图G</span></span><br><span class="line">    cout&lt;&lt;v&lt;&lt;<span class="string">&quot; &quot;</span>;	<span class="comment">//访问初始顶点v</span></span><br><span class="line">    visited[v]=<span class="literal">true</span>;	<span class="comment">//置访问标志数组相应分址值为true</span></span><br><span class="line">    <span class="built_in">InitQueue</span>(Q);	<span class="comment">//辅助队列Q初始化， 置空</span></span><br><span class="line">    <span class="built_in">EnQueue</span>(Q,v);	<span class="comment">//顶点v入队列Q</span></span><br><span class="line">    <span class="keyword">while</span> (!<span class="built_in">QueueEmpty</span>(Q))&#123; <span class="comment">//队列非空</span></span><br><span class="line">        <span class="built_in">DeQueue</span>(Q, u);	<span class="comment">//队头元素出队并置为u</span></span><br><span class="line">        <span class="comment">//FirstAdjVex(G,u)表示u的第一个邻接点</span></span><br><span class="line">        <span class="comment">//NextAdjVex(G,u,w)表示u相对于w的下一个邻接点，w≥0表示存在邻接点</span></span><br><span class="line">        <span class="keyword">for</span>(w=<span class="built_in">FirstAdjVex</span>(G,u);w&gt;=O;w=<span class="built_in">NextAdjVex</span>(G,u,w))&#123; <span class="comment">//检测顶点u的所有邻接点</span></span><br><span class="line">            <span class="keyword">if</span>(!visited[w])&#123;  <span class="comment">//w为u的尚未访问的邻接顶点</span></span><br><span class="line">                cout&lt;&lt;w;	<span class="comment">//访问w</span></span><br><span class="line">                visited[w]=<span class="literal">true</span>;	<span class="comment">//对w做已访问标记</span></span><br><span class="line">                <span class="built_in">EnQueue</span>(Q,w);	<span class="comment">//顶点w入队列</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若是非连通图，上述遍历过程执行之后，图中一定还有顶点未被访问，需要从图中另选一个未被访问的顶点作为起始点，重复上述广度优先搜索过程，直到图中所有顶点均被访问过为止。</p>
 <blockquote>
 <p><strong>算法实现：广度优先搜索遍历非连通图</strong></p>
 </blockquote>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BFSTraverse</span><span class="params">(Graph G)</span></span>&#123;<span class="comment">//对于非连通图G做广度优先遍历</span></span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> v=<span class="number">0</span>;v&lt;G.vexnum;v++) visited[v] = <span class="literal">false</span>;	<span class="comment">//访问标志数组初始化</span></span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> v=<span class="number">0</span>;v&lt;G.vexnum;v++)&#123;	<span class="comment">//从0号开始遍历</span></span><br><span class="line">      <span class="keyword">if</span>(!visited[v])</span><br><span class="line">         <span class="built_in">BFS</span>(G,v);	<span class="comment">//对尚未访问的顶点调用BFS</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于此算法，每调用一次BFS()函数，将遍历一个连通分量，<font color="red">有多少次调用，就说明图中有多少个连通分量</font>。</p>
 <blockquote>
 <p><strong>算法实现：采用邻接矩阵表示图的广度优先搜索遍历</strong></p>
 </blockquote>
@@ -832,6 +836,7 @@
 </li>
 </ol>
 <h2 id="图的应用"><a class="markdownIt-Anchor" href="#图的应用"></a> 图的应用</h2>
+<p>现实生活中的许多问题都可以转化为图来解决。例如， 如何以最小成本构建一个通信网络，如何计算地图中两地之间的最短路径，如何为复杂活动中各子任务的完成寻找一个较优的顺序等。</p>
 <h3 id="最小生成树"><a class="markdownIt-Anchor" href="#最小生成树"></a> 最小生成树</h3>
 
       
