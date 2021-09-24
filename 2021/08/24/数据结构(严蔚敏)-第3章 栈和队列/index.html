@@ -49,7 +49,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/image.e2ijang3q5k.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/image.52q3mlv4ohs0.png">
 <meta property="article:published_time" content="2021-08-24T05:43:35.000Z">
-<meta property="article:modified_time" content="2021-09-24T12:42:03.856Z">
+<meta property="article:modified_time" content="2021-09-24T12:59:05.714Z">
 <meta property="article:author" content="Alon Scholar">
 <meta property="article:tag" content="数据结构">
 <meta property="article:tag" content="算法">
@@ -450,7 +450,7 @@
 <li><font color="red">栈顶指针</font>: S.top，初始时设置S.top=-1; <font color="red">栈顶元素</font>:S.data[S.top]。</li>
 <li><font color="red">进栈操作</font>: 栈不满时，栈顶指针先加1，再送值到栈顶元素。</li>
 <li><font color="red">出栈操作</font>: 栈非空时，先取栈顶元素值，再将栈顶指针减1。</li>
-<li><font color="red">栈空条件</font>: S.top==-1; <font color="red">栈满条件</font>: S.top==MaxSize-1; <font color="red">栈长</font>:S.top+1。</li>
+<li><font color="red">栈空条件</font>: S.top==-1; <font color="red">栈满条件</font>: S.top==MAXSIZE-1; <font color="red">栈长</font>:S.top+1。</li>
 </ul>
 <blockquote>
 <p>下面是顺序栈常用的基本操作的实现。</p>
@@ -458,7 +458,7 @@
 <p><strong>一、顺序栈的初始化</strong></p>
 <ul>
 <li>
-<p>为顺序栈分配一个最大容量为MaxSize的数组空间。</p>
+<p>为顺序栈分配一个最大容量为MAXSIZE的数组空间。</p>
 </li>
 <li>
 <p>栈顶指针初始为-1，表示栈空。</p>
@@ -471,7 +471,7 @@
 <p>当top指针指向-1时，栈为空。</p>
 </li>
 <li>
-<p>当top指针指向MaxSize-1时，栈为满。因为数组下标从0开始。</p>
+<p>当top指针指向MAXSIZE-1时，栈为满。因为数组下标从0开始。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">StackEmpty</span><span class="params">(SqStack S)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> S.top == <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">StackFull</span><span class="params">(SqStack S)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> S.top == MAXSIZE<span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
@@ -593,7 +593,7 @@
 <li><font color="red">出队操作</font>: 队不空时，先取队头元素值，再将队头指针加1。</li>
 </ul>
 <blockquote>
-<p><strong>思考</strong>： 能否用Q.rear==MaxSize作为队列满的条件呢?</p>
+<p><strong>思考</strong>： 能否用Q.rear==MAXSIZE作为队列满的条件呢?</p>
 <p>答：显然不能，如上图(d)所示，队列中仅有两个元素，但仍满足该条件。这时候入队出现“<strong>上溢出</strong>” ，但这种溢出并不是真正的溢出，在data数组中依然存在可以存放元素的空位置，所以是一种“假溢出”。</p>
 </blockquote>
 <hr>
@@ -601,17 +601,17 @@
 <p><img src="https://cdn.jsdelivr.net/gh/alonscholar/image-warehouse@master/blog/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84(%E4%B8%A5%E8%94%9A%E6%95%8F)-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/image.75zqcalakds0.png" alt="image"></p>
 <ul>
 <li><font color="red">初始时</font>: Q.front = Q.rear = 0。</li>
-<li><font color="red">队首指针进1</font>: Q.front = (Q.front+1)%MaxSize。</li>
-<li><font color="red">队尾指针进1</font>: Q.rear = (Q.rear+1 )%MaxSize。</li>
-<li><font color="red">队列长度</font>: (Q.rear+MaxSize-Q.front ) %MaxSize。</li>
+<li><font color="red">队首指针进1</font>: Q.front = (Q.front+1)%MAXSIZE。</li>
+<li><font color="red">队尾指针进1</font>: Q.rear = (Q.rear+1 )%MAXSIZE。</li>
+<li><font color="red">队列长度</font>: (Q.rear+MAXSIZE-Q.front ) %MAXSIZE。</li>
 </ul>
 <blockquote>
 <p><strong>新问题</strong>： 循环队列队空和队满的判断条件是什么呢？因为队空条件是 Q.front == Q.rear 。而且当入队时有可能出现上图(d)的情况，此时也有Q.front == Q.rear。 那么如何区别队满还是队空呢？</p>
 </blockquote>
 <p>为了区分队空还是队满的情况，给出三种处理方式进行参考：</p>
 <ol>
-<li><font color="BlueViolet">牺牲一个单元来区分队空和队满</font>，入队时少用一个队列单元，这是一种较为普遍的做法，约定以“队头指针在队尾指针的下一位置作为队满的标志”，如上图(d2)所示。 此时队满条件为： (Q.rear+1) %MaxSize == Q.front。队空条件仍为： Q.front == Q.rear。</li>
-<li><font color="BlueViolet">类型中增设表示元素个数的数据成员</font>。这样，队空的条件为Q.size == 0；队满的条件为Q.size == MaxSize。这两种情况都有 Q.front == Q.rear。</li>
+<li><font color="BlueViolet">牺牲一个单元来区分队空和队满</font>，入队时少用一个队列单元，这是一种较为普遍的做法，约定以“队头指针在队尾指针的下一位置作为队满的标志”，如上图(d2)所示。 此时队满条件为： (Q.rear+1) %MAXSIZE == Q.front。队空条件仍为： Q.front == Q.rear。</li>
+<li><font color="BlueViolet">类型中增设表示元素个数的数据成员</font>。这样，队空的条件为Q.size == 0；队满的条件为Q.size == MAXSIZE。这两种情况都有 Q.front == Q.rear。</li>
 <li><font color="BlueViolet">类型中增设 tag 数据成员，以区分是队满还是队空</font>。tag 等于0时，若因删除导致Q.front == Q.rear，则为队空; tag等于1时，若因插入导致Q.front == Q.rear，则为队满。</li>
 </ol>
 <hr>
@@ -631,7 +631,7 @@
 <p><strong>二、求循环队列的长度</strong></p>
 <ul>
 <li>
-<p>对于非循环队列，尾指针和头指针的差值便是队列长度，而对于循环队列，差值可能为负数，所以需要将差值加上MaxSize, 然后与MaxSize求余。</p>
+<p>对于非循环队列，尾指针和头指针的差值便是队列长度，而对于循环队列，差值可能为负数，所以需要将差值加上MAXSIZE, 然后与MAXSIZE求余。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">QueueLength</span><span class="params">(SqQueue Q)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (Q.rear - Q.front + MAXSIZE)%MAXSIZE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
